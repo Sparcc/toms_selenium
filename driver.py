@@ -50,7 +50,6 @@ class Environment:
                 };
                 
     #people = []
-    
     def __init__(self):
         config = configparser.ConfigParser()
         config.read('config.ini')
@@ -67,6 +66,7 @@ class DriverManagement:
     driver = 0
     driverRun = False
     env = 0
+    comq = []
     
     def __init__(self, env, run = False):
         if run:
@@ -123,6 +123,12 @@ class DriverManagement:
             time.sleep(sleep)
         if wait > 0:
             self.driver.implicitly_wait(wait)
+            
+    def assertis(self, xpath, data):
+        assert data == driver.find_element_by_xpath(xpath).text
+        
+    def assertin(self, xpath, data):
+        assert data in driver.find_element_by_xpath(xpath).text
 
 class CommandActionSystem:
     #process commands
@@ -185,7 +191,7 @@ class CommandActionSystem:
             elif x.lower() in ("yes", "no", "true", "false","t", "f"):
                 x = str2bool(x)
             #is int
-            elif x != 'url' and x != 'delay' and x != 'enter':
+            elif x != 'url' and x != 'delay' and x != 'enter' and x != 'assertis' and x != 'assertin':
                 if isinstance(int(x), int):
                     x = int(x)
             returnData.append(x)
@@ -224,15 +230,7 @@ class CommandActionSystem:
             self.driverManager.quitDriver()
             acceptInput = False
             return acceptInput
-    
-    #TODO: Implement command queuing
-    #def commandQueue(self):
-    #    print('stub')
-        #return commandQueue
-        
-    #def commandRun(self, commandQueue):
-    #    print('stub')
-    
+            
     def executeAction(self, action, *args):
         i = 0
         for step in self.actions[action]:
@@ -245,6 +243,12 @@ class CommandActionSystem:
                 self.driverManager.enterKeyXpath(step[1],step[2],step[3])
             elif step[0] == 'delay':
                 self.driverManager.applyDelays(1,0)
+            elif step[0] == 'assertin':
+                self.driverManager.assertin(stept[1],args[i])
+                i+=1
+            elif step[0] == 'assertis':
+                self.driverManager.assertis(stept[1],args[i])
+                i+=1
             else:#param: xpath, data, sleep = 0, wait = 0
                 self.driverManager.inputXpath(step[1], args[i].replace("'","").replace("-"," "), step[2],step[3])
                 i+=1
