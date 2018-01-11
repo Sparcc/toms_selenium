@@ -95,7 +95,7 @@ class DriverManagement:
             )
             element.click()
         except:
-            print('Could not find element at xpath "' + xpath +'"')
+            loging.error('Could not find element at xpath "' + xpath +'"')
         
     def inputXpath(self, xpath, data, sleep = 0, wait = 0):
         self.applyDelays(sleep, wait)
@@ -106,7 +106,7 @@ class DriverManagement:
             element.clear()
             element.send_keys(data)
         except:
-            print('Could not find element at xpath "' + xpath +'"')
+            loging.error('Could not find element at xpath "' + xpath +'"')
     
     def enterKeyXpath(self, xpath, sleep = 0, wait = 0):
         self.applyDelays(sleep, wait)
@@ -116,7 +116,7 @@ class DriverManagement:
             )
             element.send_keys(Keys.RETURN)
         except:
-            print('Could not find element at xpath "' + xpath +'"')
+            loging.error('Could not find element at xpath "' + xpath +'"')
     
     def applyDelays(self, sleep = 0, wait = 0):
         if sleep > 0:
@@ -200,7 +200,8 @@ class CommandActionSystem:
             command = input()
             command = command.split(" ")
             acceptInput = self.parseCommand(command)
-    
+            
+    #command is a list of actions and args afterwards
     def parseCommand(self, command):
         acceptInput = True
         action = ''
@@ -233,8 +234,6 @@ class CommandActionSystem:
     #    print('stub')
     
     def executeAction(self, action, *args):
-        print('----------executing-%s--------'%action)
-        print('----------args------%s'%str(args))
         i = 0
         for step in self.actions[action]:
             print('-----------steps--\n%s------'%str(step))
