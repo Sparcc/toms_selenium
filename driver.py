@@ -164,6 +164,32 @@ class CommandActionSystem:
     def buildPrefabActions(self):
         logging.warning('There are no extra actions being built for CommandActionSystem class')
         
+    def addAction(self, actionName, steps, save = False):
+        #TODO: Test
+        self.actions[actionName] = steps
+        if save:
+            i=0
+            self.config.[actionName][numSteps] = len(steps)
+            for step in steps:
+                self.config[actionName]['s'+str(i)]= step
+                i+=1
+                
+    def resetConfig(self):
+        with open('config.ini', 'w') as configfile:
+            defaultConfig = configparser.ConfigParser()
+                defaultConfig.write(configfile)
+        
+    '''            
+    def delAction(self, actionName, steps, delInConfig = False):
+        #TODO: Test
+        i=0
+        for step in steps:
+            del(self.config[actionName]['s'+str(i)])
+            i+=1
+        del(self.config[actionName][numSteps])
+        config.remove_section(self.config[actionName])
+    '''
+        
     def buildActions(self):
         #each action
         for action in self.actionsAvailable:
