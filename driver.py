@@ -169,7 +169,7 @@ class CommandActionSystem:
         self.actions[actionName] = steps
         if save:
             i=0
-            self.config.[actionName][numSteps] = len(steps)
+            self.config[actionName][numSteps] = len(steps)
             for step in steps:
                 self.config[actionName]['s'+str(i)]= step
                 i+=1
