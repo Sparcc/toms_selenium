@@ -95,7 +95,7 @@ class DriverManagement:
             )
             element.click()
         except:
-            loging.error('Could not find element at xpath "' + xpath +'"')
+            logging.error('Could not find element at xpath "' + xpath +'"')
         
     def inputXpath(self, xpath, data, sleep = 0, wait = 0):
         self.applyDelays(sleep, wait)
@@ -106,7 +106,7 @@ class DriverManagement:
             element.clear()
             element.send_keys(data)
         except:
-            loging.error('Could not find element at xpath "' + xpath +'"')
+            logging.error('Could not find element at xpath "' + xpath +'"')
     
     def enterKeyXpath(self, xpath, sleep = 0, wait = 0):
         self.applyDelays(sleep, wait)
@@ -116,7 +116,7 @@ class DriverManagement:
             )
             element.send_keys(Keys.RETURN)
         except:
-            loging.error('Could not find element at xpath "' + xpath +'"')
+            logging.error('Could not find element at xpath "' + xpath +'"')
     
     def applyDelays(self, sleep = 0, wait = 0):
         if sleep > 0:
